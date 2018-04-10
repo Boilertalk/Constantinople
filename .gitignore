@@ -1,0 +1,10 @@
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+
+# macOS specific
+.DS_Store
+
+# idea files
+.idea/

@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Clibgit2",
+        "repositoryURL": "https://github.com/Boilertalk/Clibgit2.git",
+        "state": {
+          "branch": null,
+          "revision": "57a9a73e3a3ebd39d5ca2b4732af7ff0b7073a75",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "Commander",
+        "repositoryURL": "https://github.com/kylef/Commander.git",
+        "state": {
+          "branch": null,
+          "revision": "e5b50ad7b2e91eeb828393e89b03577b16be7db9",
+          "version": "0.8.0"
+        }
+      },
+      {
+        "package": "Spectre",
+        "repositoryURL": "https://github.com/kylef/Spectre.git",
+        "state": {
+          "branch": null,
+          "revision": "e34d5687e1e9d865e3527dd58bc2f7464ef6d936",
+          "version": "0.8.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
