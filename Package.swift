@@ -9,12 +9,13 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/Boilertalk/Clibgit2.git", from: "0.1.0"),
         .package(url: "https://github.com/kylef/Commander.git", from: "0.8.0"),
+        .package(url: "https://github.com/kylef/PathKit.git", from: "0.9.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "Constantinople",
-            dependencies: ["Clibgit2", "Commander"]),
+            dependencies: ["Clibgit2", "Commander", "PathKit"]),
     ]
 )

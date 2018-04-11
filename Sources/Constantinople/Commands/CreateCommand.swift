@@ -7,6 +7,7 @@
 
 import Foundation
 import Clibgit2
+import PathKit
 
 struct CreateCommand: Command {
 
@@ -48,6 +49,8 @@ struct CreateCommand: Command {
         }
 
         // Run git clone
+        print("Cloning `\(self.templateUrl)` into `\(self.libraryName)`.")
+
         var repo: OpaquePointer? = nil
         let templateUrl = self.templateUrl.cString(using: .utf8)
         let libraryName = self.libraryName.cString(using: .utf8)
@@ -55,5 +58,16 @@ struct CreateCommand: Command {
             throw Error.cloneFailed(reason: String(cString: giterr_last().pointee.message), code: -1)
         }
         git_repository_free(repo)
+
+        // Configure template
+        print("Configuring \(self.libraryName)...")
+        let path = Path.current + Path(self.libraryName)
+        path.chdir {
+            if Path("configure").exists {
+                shell("./configure", self.libraryName)
+            } else {
+                print("Warning: Template does not have a configuration file.")
+            }
+        }
     }
 }
