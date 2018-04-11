@@ -6,15 +6,54 @@
 //
 
 import Foundation
+import Clibgit2
 
 struct CreateCommand: Command {
 
-    let libraryName: String
+    static let defaultTemplateUrl = "https://github.com/CocoaPods/pod-template"
 
-    init(libraryName: String) {
+    let libraryName: String
+    let templateUrl: String
+
+    enum Error: ConstantinopleError {
+
+        case cloneFailed(reason: String, code: Int32)
+
+        var reason: String {
+            switch self {
+            case .cloneFailed(let reason, _):
+                return reason
+            }
+        }
+
+        var code: Int32 {
+            switch self {
+            case .cloneFailed(_, let code):
+                return code
+            }
+        }
+    }
+
+    init(libraryName: String, templateUrl: String? = nil) {
         self.libraryName = libraryName
+        self.templateUrl = templateUrl ?? CreateCommand.defaultTemplateUrl
     }
 
     func execute() throws {
+        // Initialize libgit2
+        git_libgit2_init()
+        defer {
+            // Shutdown libgit2 global state
+            git_libgit2_shutdown()
+        }
+
+        // Run git clone
+        var repo: OpaquePointer? = nil
+        let templateUrl = self.templateUrl.cString(using: .utf8)
+        let libraryName = self.libraryName.cString(using: .utf8)
+        guard git_clone(&repo, templateUrl, libraryName, nil) == 0 else {
+            throw Error.cloneFailed(reason: String(cString: giterr_last().pointee.message), code: -1)
+        }
+        git_repository_free(repo)
     }
 }
